@@ -15,23 +15,36 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #e0e0e0; display: flex; flex-direction: column; /* Added for ad layout */ justify-content: center; align-items: center;
-            min-height: 100vh; padding: 20px 0; /* Adjusted padding */ text-align: center; overflow-x: hidden;
+            color: #e0e0e0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; /* Ensure .container and ad containers are centered */
+            min-height: 100vh; 
+            padding-top: 20px; /* Space for top ad */
+            padding-bottom: 20px; /* Space for bottom ad if needed */
+            text-align: center; 
+            overflow-x: hidden;
         }
-        .ad-container-top { /* Style for top ad wrapper */
+        .ad-container-top {
             width: 100%;
             max-width: 468px; /* Ad width */
-            margin: 15px auto; /* Centering and spacing */
+            margin: 0 auto 15px auto; /* Top/bottom margin, centered */
             min-height: 60px; /* Ad height */
+            /* background-color: #333; /* For testing visibility */
         }
-        .container {
-            background: rgba(22, 33, 62, 0.85); padding: 30px 40px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); max-width: 500px; width: 90%;
-            border: 1px solid rgba(240, 185, 11, 0.3); animation: fadeInContainer 1s ease-out;
-            margin-top: 10px; /* Space from top ad */
-            margin-bottom: 10px; /* Space for bottom ad */
+        .container { /* Main content box */
+            background: rgba(22, 33, 62, 0.85); 
+            padding: 30px 40px; 
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
+            max-width: 500px; 
+            width: 90%;
+            border: 1px solid rgba(240, 185, 11, 0.3); 
+            animation: fadeInContainer 1s ease-out;
+            /* margin-bottom will be created by the ad container below it */
         }
         @keyframes fadeInContainer { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
         header { margin-bottom: 20px; }
 
         @keyframes pulseImage {
@@ -87,27 +100,35 @@
         #shareButton:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240, 185, 11, 0.5); }
         #shareButton:active { transform: translateY(-1px); }
         
-        #container-0f557a090022c5ded8f64ebc51ff8518 { /* Bottom ad container styling */
-             margin: 20px auto; /* Center and space */
-             min-height: 50px; /* Default, ad might set its own height */
-             max-width: 100%; /* Ensure it doesn't overflow .container */
+        footer { 
+            /* Footer is now inside .container, so its margin is relative to main content */
+            margin-top: 25px; /* Space above footer, within the container */
+            font-size: 0.85em; 
+            color: rgba(224, 224, 224, 0.7); 
         }
 
-        footer { margin-top: 20px; /* Adjusted */ font-size: 0.85em; color: rgba(224, 224, 224, 0.7); }
+        /* Bottom ad container (outside .container) */
+        #container-0f557a090022c5ded8f64ebc51ff8518 { 
+             margin: 20px auto 0 auto; /* Top margin, centered, no bottom margin from here */
+             min-height: 50px; 
+             width: 100%;
+             max-width: 728px; /* Example: common ad size, adjust as per your ad */
+             /* background-color: #444; /* For testing visibility */
+        }
+
 
         @media (max-width: 600px) {
-            .container { padding: 25px 20px; width: 95%; } /* Increased width for small screens */
+            body { padding-top: 10px; padding-bottom: 10px;}
+            .ad-container-top { margin-bottom: 10px; max-width: 100%;}
+            .container { padding: 25px 20px; width: 95%; }
             h1#mainGreeting { font-size: 2.3em; margin-bottom: 5px; } 
             .received-from-text { font-size: 0.9em; margin-bottom: 10px; } 
-            #eidImage { max-width: 220px; /* Slightly smaller on mobile if needed */ }
+            #eidImage { max-width: 220px; }
             .eid-greeting { font-size: 1em; }
             input[type="text"] { padding: 12px; }
             #shareButton { font-size: 1em; padding: 12px 25px; }
-            .ad-container-top {
-                /* Adjust if needed for mobile, but 468px is often too wide for small mobiles */
-                /* Consider responsive ad units from your ad provider if available */
-                max-width: 100%; /* Allow it to shrink */
-            }
+            footer { margin-top: 20px; }
+            #container-0f557a090022c5ded8f64ebc51ff8518 { margin-top: 15px; max-width: 100%;}
         }
     </style>
 </head>
@@ -128,7 +149,7 @@
     </div>
     <!-- ====== TOP AD END ====== -->
 
-    <div class="container">
+    <div class="container"> <!-- Main content container START -->
         <header>
             <img src="eidgreeting.gif" alt="Eid Mubarak" id="eidImage"> 
             <h1 id="mainGreeting">Eid Mubarak</h1>
@@ -145,18 +166,18 @@
 
             <button id="shareButton">💌 WhatsApp Par Bhejein</button>
         </main>
-
-        <!-- ====== BOTTOM AD CONTAINER START (inside .container) ====== -->
-        <div id="container-0f557a090022c5ded8f64ebc51ff8518">
-            <!-- Ad will be loaded here by its script -->
-        </div>
-        <!-- ====== BOTTOM AD CONTAINER END ====== -->
         
         <footer>
             <p>© <span id="currentYear"></span> Apni Wishes Banayein!</p>
         </footer>
-    </div> <!-- .container ka closing tag -->
+    </div> <!-- Main content container END -->
 
+    <!-- ====== BOTTOM AD CONTAINER START (OUTSIDE .container) ====== -->
+    <div id="container-0f557a090022c5ded8f64ebc51ff8518">
+        <!-- Ad will be loaded here by its script -->
+    </div>
+    <!-- ====== BOTTOM AD CONTAINER END ====== -->
+    
     <!-- ====== BOTTOM AD SCRIPT START ====== -->
     <script async="async" data-cfasync="false" src="//pl26727078.profitableratecpm.com/0f557a090022c5ded8f64ebc51ff8518/invoke.js"></script>
     <!-- ====== BOTTOM AD SCRIPT END ====== -->
